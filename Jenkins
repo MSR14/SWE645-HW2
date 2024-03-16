@@ -3,12 +3,12 @@ pipeline {
     
     // def tag
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials("docker-hub-cred")
-        KUBECONFIG_CREDENTIALS = credentials("kube-config-cred")
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-cred')
+        KUBECONFIG_CREDENTIALS = credentials('kube-config-cred')
         // registryCredential = 'dockerhub-credentials'
         // TIMESTAMP = "${currentBuild.timestamp}"
         // def imageName = "banudeep/hw2"
-        // def dockerImage=""
+        dockerImage=''
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
-                    docker.build('banudeep/hw2:latest')
+                    dockerImage= docker.build('banudeep/hw2:latest')
                     // Build the Docker image with the dynamic tag
                     // sh "docker build -t ${tag} ."
                 }
@@ -29,12 +29,9 @@ pipeline {
                     // Log in to Docker Hub
                     // docker login -u banudeep -p ${DOCKER_HUB_PASS}
                     // sh "docker push ${tag}"
-                    // docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-                    //     dockerImage.push("latest")
-                    // }
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         // Push Docker image to Docker Hub
-                        docker.image('banudeep/hw2:latest').push()
+                        dockerImage.push()
                     }
                 }
             }
