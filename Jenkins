@@ -3,8 +3,8 @@ pipeline {
     
     // def tag
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-cred')
-        KUBECONFIG_CREDENTIALS = credentials('kube-config-cred')
+        DOCKER_HUB_CREDENTIALS = credentials("docker-hub-cred")
+        KUBECONFIG_CREDENTIALS = credentials("kube-config-cred")
         // registryCredential = 'dockerhub-credentials'
         // TIMESTAMP = "${currentBuild.timestamp}"
         // def imageName = "banudeep/hw2"
