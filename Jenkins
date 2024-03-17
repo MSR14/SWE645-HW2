@@ -27,12 +27,13 @@ pipeline {
             steps {
                 script {
                     // Log in to Docker Hub
-                    // docker login -u banudeep -p ${DOCKER_HUB_PASS}
+                    docker login -u banudeep -p Hello@#890
+                    dockerImage.push()
                     // sh "docker push ${tag}"
-                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
+                   // docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         // Push Docker image to Docker Hub
-                        dockerImage.push()
-                    }
+                       // dockerImage.push()
+                   // }
                 }
             }
         }
