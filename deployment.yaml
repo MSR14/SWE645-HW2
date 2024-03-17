@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: swe645-hw2-container
-          image: banudeep/hw2:latest
+          image: banudeep/hw2:{{IMAGE_TAG}}
           ports:
             - containerPort: 80
