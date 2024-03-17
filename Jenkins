@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
-                    dockerImage= docker.build('banudeep/hw2:latest')
+                    dockerImage= docker.build('banudeep/hw2:lates')
                 }
             }
         }
