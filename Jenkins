@@ -1,13 +1,9 @@
 pipeline {
     agent any
     
-    // def tag
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-cred')
         KUBECONFIG_CREDENTIALS = credentials('kube-config-cred')
-        // registryCredential = 'dockerhub-credentials'
-        // TIMESTAMP = "${currentBuild.timestamp}"
-        // def imageName = "banudeep/hw2"
         dockerImage=''
     }
 
@@ -17,8 +13,6 @@ pipeline {
                 script {
                     checkout scm
                     dockerImage= docker.build('banudeep/hw2:latest')
-                    // Build the Docker image with the dynamic tag
-                    // sh "docker build -t ${tag} ."
                 }
             }
         }
@@ -26,14 +20,9 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    // Log in to Docker Hub
+                
                     sh "docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW"
                     dockerImage.push()
-                    // sh "docker push ${tag}"
-                   // docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
-                        // Push Docker image to Docker Hub
-                       // dockerImage.push()
-                   // }
                 }
             }
         }
@@ -41,10 +30,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Set up KUBECONFIG for kubectl
-                    withCredentials([[$class: 'FileBinding', credentialsId: 'your-kubeconfig-credentials-id', variable: 'KUBECONFIG']]) {
-                        // Deploy using kubectl
-                        sh "kubectl --kubeconfig=\$KUBECONFIG apply -f deployment.yaml"
+                    withCredentials([file(credentialsId: 'your-kubeconfig-credentials-id', variable: 'KUBECONFIG')]) {
+                        sh 'kubectl --kubeconfig=$KUBECONFIG apply -f your-deployment.yaml'
                         sh "kubectl --kubeconfig=\$KUBECONFIG apply -f service.yaml"
                     }
                 }
