@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
         - name: swe645-hw2-container
-          image: banudeep/hw2:lates
+          image: banudeep/hw2:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
