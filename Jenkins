@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     checkout scm
-                    dockerImage= docker.build('banudeep/hw2:${env.BUILD_NUMBER}')
+                    dockerImage= docker.build('banudeep/hw2:${env.BUILD_ID}')
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Define the tag using Jenkins environment variables or custom logic
-                    def tag = "${env.BUILD_NUMBER}"
+                    def tag = "${env.BUILD_ID}"
                     
                     // Replace placeholder in the Deployment YAML with the actual image tag
                     sh "sed -i 's|{{IMAGE_TAG}}|${tag}|g' deployment.yaml"
